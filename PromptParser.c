@@ -97,12 +97,18 @@ Token getNextToken()
     return tok;
 }
 
-int main ()
+int main (int argc, char *argv[])
 {
-    FILE *f = fopen("archivo,pmt", "r");
-    if (!f)
+    if(argc != 2)
     {
-        perror("No se pudo abrir el archivo");
+        printf("Uso: %s archivo.pmt\n", argv[0]);
+        return 1;
+    }
+    
+    FILE *f = fopen(argv[1], "r");
+    if(!f)
+    {
+        perror("No es posible abrir el archivo");
         return 1;
     }
     initLexer(f);
@@ -114,21 +120,26 @@ int main ()
         switch (tok.type)
         {
             case TOKEN_CLAVE:
-                printf("Linea %d: CLAVE='%s', TEXTO='%s'\n", tok.line, tok.key, tok.text);
+                printf("Linea %d: CLAVE='%s' TEXTO='%s'\n", tok.line, tok.key, tok.text);
                 break;
+            
             case TOKEN_NEWLINE:
                 printf("Linea %d: NEWLINE\n", tok.line);
                 break;
+            
             case TOKEN_EOF:
                 printf("Linea %d: EOF\n", tok.line);
                 break;
+            
             case TOKEN_ERROR:
                 printf("Linea %d: ERROR\n", tok.line);
                 break;
+            
+            
         }
-    } while (tok.type != TOKEN_EOF);
+    }while(tok.type != TOKEN_EOF);
 
-    fclose(f);
+    fclose(f);    
     return 0;
 }
 // Este es un analizador léxico simple en C que lee un archivo de texto línea por línea y tokeniza cada línea en tokens de tipo CLAVE, NEWLINE, EOF o ERROR. Utiliza funciones estándar de C para manejar archivos y cadenas, y sigue el estándar C17.
@@ -138,5 +149,4 @@ int main ()
 // 1. Definicion de EBNF
 // 2. Parser
 // 3. Ejemplos de promts para el pmt
-// 4. Como pasarle archivo pmt al programa
-// 5. Como leer los archivos pmt 
+// 
