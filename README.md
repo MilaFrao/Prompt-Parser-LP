@@ -1,4 +1,4 @@
-# Prompt-Parser-LP
+# Prompt-parserr-LP
 
 <promt> ::= <BRILLA> | <AVANZA> | <CREAR> | <FLUYE>;
 

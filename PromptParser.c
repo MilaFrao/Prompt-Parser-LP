@@ -117,7 +117,7 @@ void esperarClaveExacta(const char *k)
     
 }
 
-void parserBrilla()
+void parserBRILLA()
 {
     esperarClaveExacta("Breve_contexto");  
     esperarClaveExacta("Rol_deseado");
@@ -129,45 +129,45 @@ void parserBrilla()
 
 void parserAVANZA()
 {
-    expectClaveExacta("Antecedentes");
-    expectClaveExacta("Vision_proposito");
-    expectClaveExacta("Accion_concreta");
-    expectClaveExacta("Nivel_detalle");
-    expectClaveExacta("Zona_enfoque");
-    expectClaveExacta("Aspecto_visual");
+    esperarClaveExacta("Antecedentes");
+    esperarClaveExacta("Vision_proposito");
+    esperarClaveExacta("Accion_concreta");
+    esperarClaveExacta("Nivel_detalle");
+    esperarClaveExacta("Zona_enfoque");
+    esperarClaveExacta("Aspecto_visual");
 }
 
 void parserCREAR()
 {
-    expectClaveExacta("Contexto");
-    expectClaveExacta("Rol");
-    expectClaveExacta("Enfoque");
-    expectClaveExacta("Accion");
-    expectClaveExacta("Resultado");
+    esperarClaveExacta("Contexto");
+    esperarClaveExacta("Rol");
+    esperarClaveExacta("Enfoque");
+    esperarClaveExacta("Accion");
+    esperarClaveExacta("Resultado");
 }
 
 void parserFLUYE()
 {
-    expectClaveExacta("Foco");
-    expectClaveExacta("Lugar");
-    expectClaveExacta("Usuario");
-    expectClaveExacta("Yo_interior");
-    expectClaveExacta("Ejercicio");
+    esperarClaveExacta("Foco");
+    esperarClaveExacta("Lugar");
+    esperarClaveExacta("Usuario");
+    esperarClaveExacta("Yo_interior");
+    esperarClaveExacta("Ejercicio");
 }
 
-void PromptParser()
+void Promptparser()
 {
     advance();
     if(lookahead.type != TOKEN_CLAVE) error("Se esperaba una clave inicial");
 
     if (strcmp(lookahead.key, "Breve_contexto") == 0)
-        parseBRILLA();
+        parserBRILLA();
     else if (strcmp(lookahead.key, "Antecedentes") == 0)
-        parseAVANZA();
+        parserAVANZA();
     else if (strcmp(lookahead.key, "Contexto") == 0)
-        parseCREAR();
+        parserCREAR();
     else if (strcmp(lookahead.key, "Foco") == 0)
-        parseFLUYE();
+        parserFLUYE();
     else
         error("Clave inicial no válida");
 
@@ -186,7 +186,7 @@ int main (int argc, char *argv[])
     }
     else
     {
-        f = fopen("C:/Users/HP/OneDrive/Documentos/Workspace/Lenguajes de Programacion/Prompt-Parser-LP/Promptps.pmt", "r");
+        f = fopen("C:/Users/HP/OneDrive/Documentos/Workspace/Lenguajes de Programacion/Prompt-parser-LP/Promptps.pmt", "r");
         printf("Usando archivo por defecto: Promptps.pmt\n");
     }
     if(!f)
@@ -195,9 +195,9 @@ int main (int argc, char *argv[])
         return 1;
     }
     initLexer(f);
-    PromptParser();
+    Promptparser();
     
-    printf("Análisis completado sin errores.\n");
+    printf("Analisis completado sin errores.\n");
     
     fclose(f);    
     return 0;
@@ -207,6 +207,6 @@ int main (int argc, char *argv[])
 //Sigo el dia siguiente 
 // Me falta:
 // 1. 
-// 2. Parser
+// 2. parserr
 // 3. Ejemplos de promts para el pmt
 // 
