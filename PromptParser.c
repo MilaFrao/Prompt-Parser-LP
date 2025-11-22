@@ -22,6 +22,7 @@ typedef struct
 static FILE *g_file = NULL;
 static int g_line = 0;
 static char buffer[512];
+static Token lookahead;
 
 static void trim(char *s)
 {
@@ -97,48 +98,107 @@ Token getNextToken()
     return tok;
 }
 
+void advance()
+{
+    lookahead = getNextToken();
+}
+
+void error(const char *msg)
+{
+    printf("Error en la linea %d: %s (Token encontrado: '%s')\n", lookahead.line, msg, lookahead.key);
+    exit(1);
+}
+
+void esperarClaveExacta(const char *k)
+{
+    if(lookahead.type == TOKEN_CLAVE) error("Se esperaba una clave");
+    if(strcmp(lookahead.key, k)!=0)error(k);
+    advance();
+    
+}
+
+void parserBrilla()
+{
+    esperarClaveExacta("Breve_contexto");  
+    esperarClaveExacta("Rol_deseado");
+    esperarClaveExacta("Intencion_meta");       
+    esperarClaveExacta("Lenguaje_tono");          
+    esperarClaveExacta("Logica_estructura");          
+    esperarClaveExacta("Aspecto_resultado");                       
+}
+
+void parserAVANZA()
+{
+    expectClaveExacta("Antecedentes");
+    expectClaveExacta("Vision_proposito");
+    expectClaveExacta("Accion_concreta");
+    expectClaveExacta("Nivel_detalle");
+    expectClaveExacta("Zona_enfoque");
+    expectClaveExacta("Aspecto_visual");
+}
+
+void parserCREAR()
+{
+    expectClaveExacta("Contexto");
+    expectClaveExacta("Rol");
+    expectClaveExacta("Enfoque");
+    expectClaveExacta("Accion");
+    expectClaveExacta("Resultado");
+}
+
+void parserFLUYE()
+{
+    expectClaveExacta("Foco");
+    expectClaveExacta("Lugar");
+    expectClaveExacta("Usuario");
+    expectClaveExacta("Yo_interior");
+    expectClaveExacta("Ejercicio");
+}
+
+void PromptParser()
+{
+    advance();
+    if(lookahead.type != TOKEN_CLAVE) error("Se esperaba una clave inicial");
+
+    if (strcmp(lookahead.key, "Breve_contexto") == 0)
+        parseBRILLA();
+    else if (strcmp(lookahead.key, "Antecedentes") == 0)
+        parseAVANZA();
+    else if (strcmp(lookahead.key, "Contexto") == 0)
+        parseCREAR();
+    else if (strcmp(lookahead.key, "Foco") == 0)
+        parseFLUYE();
+    else
+        error("Clave inicial no válida");
+
+    if (lookahead.type != TOKEN_EOF)
+        error("Texto extra después del final del prompt");
+
+}
+
+
 int main (int argc, char *argv[])
 {
-    if(argc != 2)
+    FILE *f=NULL;
+    if(argc ==2)
     {
-        printf("Uso: %s archivo.pmt\n", argv[0]);
-        return 1;
+        f = fopen(argv[1], "r");
     }
-    
-    FILE *f = fopen(argv[1], "r");
+    else
+    {
+        f = fopen("C:/Users/HP/OneDrive/Documentos/Workspace/Lenguajes de Programacion/Prompt-Parser-LP/Promptps.pmt", "r");
+        printf("Usando archivo por defecto: Promptps.pmt\n");
+    }
     if(!f)
     {
-        perror("No es posible abrir el archivo");
+        printf("No se pudo abrir el archivo.\n");
         return 1;
     }
     initLexer(f);
-    Token tok;
-
-    do
-    {
-        tok = getNextToken();
-        switch (tok.type)
-        {
-            case TOKEN_CLAVE:
-                printf("Linea %d: CLAVE='%s' TEXTO='%s'\n", tok.line, tok.key, tok.text);
-                break;
-            
-            case TOKEN_NEWLINE:
-                printf("Linea %d: NEWLINE\n", tok.line);
-                break;
-            
-            case TOKEN_EOF:
-                printf("Linea %d: EOF\n", tok.line);
-                break;
-            
-            case TOKEN_ERROR:
-                printf("Linea %d: ERROR\n", tok.line);
-                break;
-            
-            
-        }
-    }while(tok.type != TOKEN_EOF);
-
+    PromptParser();
+    
+    printf("Análisis completado sin errores.\n");
+    
     fclose(f);    
     return 0;
 }
@@ -146,7 +206,7 @@ int main (int argc, char *argv[])
 //Al menos eso dice GitCopilot.
 //Sigo el dia siguiente 
 // Me falta:
-// 1. Definicion de EBNF
+// 1. 
 // 2. Parser
 // 3. Ejemplos de promts para el pmt
 // 
