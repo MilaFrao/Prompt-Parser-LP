@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include<direct.h>
+
 
 typedef enum
 {  
@@ -111,10 +113,13 @@ void error(const char *msg)
 
 void esperarClaveExacta(const char *k)
 {
-    if(lookahead.type == TOKEN_CLAVE) error("Se esperaba una clave");
-    if(strcmp(lookahead.key, k)!=0)error(k);
+    if (lookahead.type != TOKEN_CLAVE)
+        error("Se esperaba una clave");
+
+    if (strcmp(lookahead.key, k) != 0)
+        error(k);
+
     advance();
-    
 }
 
 void parserBRILLA()
@@ -179,6 +184,10 @@ void Promptparser()
 
 int main (int argc, char *argv[])
 {
+    char cwd[512];
+    _getcwd(cwd, sizeof(cwd));
+    printf("Directorio de trabajo actual: %s\n", cwd);
+
     FILE *f=NULL;
     if(argc ==2)
     {
@@ -186,8 +195,9 @@ int main (int argc, char *argv[])
     }
     else
     {
-        f = fopen("C:/Users/HP/OneDrive/Documentos/Workspace/Lenguajes de Programacion/Prompt-parser-LP/Promptps.pmt", "r");
-        printf("Usando archivo por defecto: Promptps.pmt\n");
+        f = fopen("C:\\Users\\HP\\Documents\\Workspace\\Lenguajes de Programacion\\Prompt-Parser-LP\\Prompt.pmt", "r");
+
+        printf("Usando archivo por defecto: Prompt.pmt\n");
     }
     if(!f)
     {
