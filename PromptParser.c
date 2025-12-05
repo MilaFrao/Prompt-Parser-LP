@@ -1,5 +1,9 @@
-//------------------------------------------ Segunda versión del Prompt Parser en C ---------------------------------------------------------
+//------------------------------------------ Segunda y definitiva versión del Prompt Parser en C (Menos mal 🫡)---------------------------------------------------------
 /*
+
+Desarrollado por: Samuel Josue Mila de la Roca Guerra
+Cedula: 31.632.023
+Correo: miladelaroca@gmail.com
 
 Lexer + Parser LL(1) con listas de sinónimos por clave (arrays const char*)
 - Soporta 4 perfiles: BRILLA, AVANZA, CREAR, FLUYE
@@ -7,6 +11,7 @@ Lexer + Parser LL(1) con listas de sinónimos por clave (arrays const char*)
 - advance() ignora líneas vacías; se valida texto no vacío
 Compilar:
 gcc PromptParser.c -o PromptParser
+O en visual studio code: ctrl+alt+N (Con la extensión Code Runner)
 */
 
 #include <stdio.h>
