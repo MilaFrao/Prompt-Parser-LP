@@ -52,9 +52,6 @@ Ejemplo válido:
 * **Estructura_logica: Paso a paso.**
 * **Forma_del_resultado: Resumen claro.**
 
-
----
-
 # Comportamiento del Programa
 
  **1. Lexer**
