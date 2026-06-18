@@ -2,6 +2,9 @@ Instrucciones de Usuario — Prompt Parser (Lexer + Parser LL(1))
 
 La entrega incluye:
 
+Vamos a ver que pasa chico
+
+
 Código fuente autodocumentado: PromptParser.c
 Especificación formal en EBNF: README.md
 Archivo de prueba: Prompt.pmt
